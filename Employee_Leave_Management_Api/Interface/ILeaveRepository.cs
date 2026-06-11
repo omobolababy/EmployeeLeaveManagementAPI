@@ -1,27 +1,27 @@
-﻿using Employee_Leave_Management_Api.Dto;
+﻿using System.Collections;
+using Employee_Leave_Management_Api.Dto;
 using Employee_Leave_Management_Api.Model;
+using Employee_Leave_Management_Api.Responses;
 
 namespace Employee_Leave_Management_Api.Interface;
 
 public interface ILeaveRepository
 {
-    Task<IEnumerable<LeaveRequest>> GetAllLeaves();
-    
-    Task<LeaveRequest> GetLeaveById(int id);
-    
-    Task<LeaveRequest> CreateLeave(CreateLeaveRequestDto dto);
-    
-    Task<LeaveRequest> UpdateLeave(int id, UpdateLeaveRequestDto dto);
-    
-    Task<bool> DeleteLeave(int id);
-    
-    Task<bool> ApproveLeave(int id);
-    
-    Task<bool> RejectLeave(int id);
+    Task<IEnumerable<LeaveRequestResponseDto>> GetAllAsync();
 
-    Task<IEnumerable<LeaveRequest>> GetLeaveByStatus(String status);
-    
-    Task<IEnumerable<Employee>> GetEmployeeCurrentlyOnLeave();
+    Task<LeaveRequestResponseDto?> GetByIdAsync(int id);
 
-    Task<object> GetDepartmentLeaveStatistics();
+    Task<LeaveRequestResponseDto> CreateAsync(SubmitLeaveRequestDto dto);
+
+    Task<LeaveRequestResponseDto?> UpdateAsync(int id, SubmitLeaveRequestDto dto);
+
+    Task<bool> DeleteAsync(int id);
+
+    Task<LeaveRequestResponseDto> ApproveAsync(int leaveId, LeaveActionRequestDto dto);
+
+    Task<LeaveRequestResponseDto> RejectAsync(int leaveId, LeaveActionRequestDto dto);
+
+    Task<IEnumerable<LeaveRequestResponseDto>> GetLeaveByStatusAsync(string status);
+
+    Task<IEnumerable> GetLeaveStatisticsAsync();
 }

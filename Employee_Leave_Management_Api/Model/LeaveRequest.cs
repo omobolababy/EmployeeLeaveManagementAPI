@@ -1,4 +1,6 @@
-﻿namespace Employee_Leave_Management_Api.Model;
+﻿using Employee_Leave_Management_Api.Constants;
+
+namespace Employee_Leave_Management_Api.Model;
 
 public class LeaveRequest
 {
@@ -11,4 +13,5 @@ public class LeaveRequest
     public string Status { get; set; } = "Pending";
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public Employee Employee { get; set; }
+    public ICollection<LeaveApproval> Approvals { get; set; } = new List<LeaveApproval>();
 }

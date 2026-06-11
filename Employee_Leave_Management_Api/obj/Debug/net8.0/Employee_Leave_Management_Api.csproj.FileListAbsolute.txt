@@ -141,3 +141,7 @@ C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Managem
 C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\obj\Debug\net8.0\Employee_Leave_Management_Api.pdb
 C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\obj\Debug\net8.0\Employee_Leave_Management_Api.genruntimeconfig.cache
 C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\obj\Debug\net8.0\ref\Employee_Leave_Management_Api.dll
+C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\obj\Debug\net8.0\Employee_Leave_Management_Api.sourcelink.json
+C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
+C:\Users\USER\RiderProjects\Employee_Leave_Management_Api\Employee_Leave_Management_Api\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

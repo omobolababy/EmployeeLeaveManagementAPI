@@ -1,5 +1,4 @@
 ﻿using Employee_Leave_Management_Api.Data;
-using Employee_Leave_Management_Api.Dto;
 using Employee_Leave_Management_Api.Interface;
 using Employee_Leave_Management_Api.Model;
 using Microsoft.EntityFrameworkCore;
@@ -9,75 +8,60 @@ namespace Employee_Leave_Management_Api.Services;
 public class EmployeeRepository : IEmployeeRepository
 {
     private readonly ApplicationDbContext _dbcontext;
-    
     public EmployeeRepository(ApplicationDbContext dbcontext)
     {
         _dbcontext = dbcontext;
     }
-    public async Task<IEnumerable<Employee>> GetAllEmployees()
+
+
+    public async Task<IEnumerable<Employee>> GetAllAsync()
     {
-        var employee = await _dbcontext.Employees.ToListAsync();
+        var employee = await _dbcontext.Employees.OrderByDescending(e => e.DateJoined).ToListAsync();
         return employee;
     }
 
-    public async Task<Employee> GetEmployeeById(int id)
+    public async Task<Employee?> GetByIdAsync(int id)
     {
-        var employee = await _dbcontext.Employees.Include(x => x.LeavesRequests).FirstOrDefaultAsync(x => x.Id == id);
+        var employee = await _dbcontext.Employees.FirstOrDefaultAsync(e => e.Id == id);
         return employee;
     }
 
-    public async Task<Employee> CreateEmployee(CreateEmployeeDto dto)
+    public async Task<Employee> AddAsync(Employee employee)
     {
-        var employeeExists = await _dbcontext.Employees.AnyAsync(x => x.Email == dto.Email);
-        if (employeeExists)
-        {
-            throw new Exception("Employee already exists");
-        }
-        
-        var employee = new Employee
-        {
-            FullName = dto.FullName,
-            Email = dto.Email,
-            Department = dto.Department,
-            DateJoined = dto.DateJoined
-        };
-        _dbcontext.Employees.AddAsync(employee);
+        _dbcontext.Employees.Add(employee);
         await _dbcontext.SaveChangesAsync();
-        
         return employee;
     }
 
-    public async Task<Employee> UpdateEmployee(int id, UpdateEmployeeDto dto)
+    public async Task<Employee> UpdateAsync(int id, Employee updatedemployee)
     {
-        var employee = await _dbcontext.Employees.FindAsync(id);
-        if (employee == null) 
-            return null;
-        
-        employee.FullName = dto.FullName;
-        employee.Email = dto.Email;
-        employee.Department = dto.Department;
-        
-        _dbcontext.Employees.Update(employee);
+        var existing = await _dbcontext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        if (existing is null) return null;
+
+        existing.FullName = updatedemployee.FullName;
+        existing.Email = updatedemployee.Email;
+        existing.Department = updatedemployee.Department;
+
         await _dbcontext.SaveChangesAsync();
-        
-        return employee;
+        return existing;
     }
 
-    public async Task<bool> DeleteEmployee(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var employee = await _dbcontext.Employees.FindAsync(id);
-        if (employee == null) 
+        var existing = await _dbcontext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        if (existing is null)
+        {
             return false;
-        
-        _dbcontext.Employees.Remove(employee);
+        }
+
+        _dbcontext.Employees.Remove(existing);
         await _dbcontext.SaveChangesAsync();
-        
         return true;
     }
 
-    public async Task<IEnumerable<LeaveRequest>> GetEmployeeLeaveHistory(int employeeId)
+    public async Task<bool> ExistsAsync(int id)
     {
-        var employee = await _dbcontext.LeaveRequests.Where(x => x.EmployeeId == employeeId).ToListAsync();
-        return employee;
+        var employee = await _dbcontext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        return employee != null;
     }
 }

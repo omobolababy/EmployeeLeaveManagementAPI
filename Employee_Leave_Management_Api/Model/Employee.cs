@@ -8,5 +8,5 @@ public class Employee
     public string Department { get; set; }
     public DateTime DateJoined { get; set; }
     
-    public ICollection<LeaveRequest> LeavesRequests { get; set; } = new List<LeaveRequest>();
+    public ICollection<LeaveRequest> LeaveRequest { get; set; } = new List<LeaveRequest>();
 }

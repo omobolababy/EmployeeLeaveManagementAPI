@@ -1,19 +1,13 @@
-﻿using Employee_Leave_Management_Api.Dto;
-using Employee_Leave_Management_Api.Model;
+﻿using Employee_Leave_Management_Api.Model;
 
 namespace Employee_Leave_Management_Api.Interface;
 
 public interface IEmployeeRepository
 {
-    Task<IEnumerable<Employee>> GetAllEmployees();
-    
-    Task<Employee> GetEmployeeById(int id);
-    
-    Task<Employee> CreateEmployee(CreateEmployeeDto dto);
-    
-    Task<Employee> UpdateEmployee(int id, UpdateEmployeeDto dto);
-    
-    Task<bool> DeleteEmployee(int id);
-    
-    Task<IEnumerable<LeaveRequest>> GetEmployeeLeaveHistory(int employeeId);
+    Task<IEnumerable<Employee>> GetAllAsync();
+    Task<Employee?> GetByIdAsync(int id);
+    Task<Employee> AddAsync(Employee employee);
+    Task<Employee> UpdateAsync(int id, Employee updatedemployee);
+    Task<bool> DeleteAsync(int id);
+    Task<bool> ExistsAsync(int id);
 }

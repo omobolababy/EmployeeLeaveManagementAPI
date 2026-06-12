@@ -5,23 +5,19 @@ namespace Employee_Leave_Management_Api.Interface;
 
 public interface ILeaveRepository
 {
-    Task<IEnumerable<LeaveRequest>> GetAllLeaves();
-    
-    Task<LeaveRequest> GetLeaveById(int id);
-    
-    Task<LeaveRequest> CreateLeave(CreateLeaveRequestDto dto);
-    
-    Task<LeaveRequest> UpdateLeave(int id, UpdateLeaveRequestDto dto);
-    
-    Task<bool> DeleteLeave(int id);
-    
-    Task<bool> ApproveLeave(int id);
-    
-    Task<bool> RejectLeave(int id);
+    Task<IEnumerable<LeaveRequest>> GetAllAsync();
+    Task<LeaveRequest?> GetByIdAsync(int id);
 
-    Task<IEnumerable<LeaveRequest>> GetLeaveByStatus(String status);
-    
-    Task<IEnumerable<Employee>> GetEmployeeCurrentlyOnLeave();
+    Task<IEnumerable<LeaveRequest>> GetEmployeeLeaveHistoryAsync(int employeeId);
 
-    Task<object> GetDepartmentLeaveStatistics();
+    Task<LeaveRequest> SubmitAsync(SubmitLeaveRequestDto dto);
+    Task<LeaveRequest?> UpdateAsync(int id, SubmitLeaveRequestDto dto);
+    Task<bool> DeleteAsync(int id);
+
+    Task<LeaveRequest?> ApproveAsync(int leaveId, LeaveActionRequestDto dto);
+    Task<LeaveRequest?> RejectAsync(int leaveId, LeaveActionRequestDto dto);
+
+    Task<IEnumerable<LeaveRequest>> GetByStatusAsync(string status);
+    Task<IEnumerable<Employee>> GetEmployeesCurrentlyOnLeaveAsync();
+    Task<IEnumerable<DepartmentLeaveStatistics>> GetLeaveStatisticsByDepartmentAsync();
 }
